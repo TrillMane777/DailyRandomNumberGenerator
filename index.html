@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Energy Of The Day</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="embed-wrap">
+    <div class="widget" role="region" aria-label="The Energy Of The Day random number widget">
+      <div class="header">
+        <div>
+          <div class="title">The Energy Of The Day</div>
+          <div class="subtitle">Tap the green button to reveal today’s number</div>
+        </div>
+        <button id="revealBtn" class="btn" aria-controls="energyNumber" aria-live="polite">Reveal Number</button>
+      </div>
+
+      <div class="content">
+        <div class="starbox" aria-live="polite" aria-atomic="true">
+          <div id="energyNumber" class="number" aria-label="Energy number">--</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="pill" title="Source: curated set">
+          • Randomized from a curated set
+        </span>
+        <span class="pill" id="lastTime">Not picked yet</span>
+      </div>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>
