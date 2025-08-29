@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Energy Of The Day</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #0f1630;
+      --accent: #19c37d; /* green button */
+      --accent-pressed: #15a86a;
+      --text: #e8eefc;
+      --muted: #9bb0d3;
+      --starbox: #0a1230;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 600px at 70% -10%, #16224a 0%, transparent 60%),
+                  radial-gradient(900px 500px at -10% 10%, #0b1a3a 0%, transparent 60%),
+                  linear-gradient(180deg, #04050d 0%, #0a0f1f 100%);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Noto Sans, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .widget {
+      width: min(680px, 96vw);
+      background: rgba(16, 22, 48, .6);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 18px 10px 18px;
+    }
+
+    .title {
+      font-weight: 700;
+      letter-spacing: .3px;
+      font-size: clamp(18px, 3.2vw, 22px);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      padding: 12px 16px;
+      background: var(--accent);
+      color: #062e1e;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+      box-shadow: 0 6px 16px rgba(25,195,125,.35);
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); background: var(--accent-pressed); }
+
+    .content {
+      padding: 0 18px 18px 18px;
+    }
+
+    .starbox {
+      position: relative;
+      border-radius: 22px;
+      background: radial-gradient(120% 120% at 80% 20%, #182a6b 0%, #0b1740 40%, #060b1f 75%), #07102a;
+      border: 1px solid rgba(121, 167, 255, .12);
+      min-height: clamp(180px, 36vw, 320px);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: inset 0 0 60px rgba(29, 78, 216,.25), 0 20px 40px rgba(0,0,0,.35);
+      isolation: isolate;
+    }
+
+    /* Subtle twinkling stars */
+    .starbox::before, .starbox::after {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.8) 50%, transparent 51%),
+        radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,.8) 50%, transparent 51%),
+        radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 45% 50%, rgba(255,255,255,.75) 50%, transparent 51%),
+        radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1px 1px at 15% 65%, rgba(255,255,255,.8) 50%, transparent 51%);
+      opacity: .35;
+      mix-blend-mode: screen;
+      animation: drift 35s linear infinite;
+      pointer-events: none;
+    }
+    .starbox::after {
+      animation-duration: 60s;
+      opacity: .25;
+      transform: scale(1.3);
+      filter: blur(.3px);
+    }
+    @keyframes drift {
+      0% { transform: translate3d(0,0,0); }
+      50% { transform: translate3d(-10px, -8px, 0); }
+      100% { transform: translate3d(0,0,0); }
+    }
+
+    .number {
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(40px, 9.2vw, 92px);
+      letter-spacing: .5px;
+      text-shadow: 0 8px 20px rgba(0,0,0,.45), 0 0 20px rgba(59,130,246,.25);
+      background: linear-gradient(180deg, #cde2ff 0%, #b9d2ff 30%, #93b5ff 60%, #7aa4ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transform: translateY(2px);
+      user-select: none;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 12px 18px 18px 18px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      padding: 6px 10px;
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      font-size: 12px;
+      color: #cfe1ff;
+      background: rgba(255,255,255,.03);
+    }
+
+    /* Make the whole card embeddable and responsive */
+    .embed-wrap { width: 100%; max-width: 840px; }
+  </style>
+</head>
+<body>
+  <div class="embed-wrap">
+    <div class="widget" role="region" aria-label="The Energy Of The Day random number widget">
+      <div class="header">
+        <div>
+          <div class="title">The Energy Of The Day</div>
+          <div class="subtitle">Tap the green button to reveal today’s number</div>
+        </div>
+        <button id="revealBtn" class="btn" aria-controls="energyNumber" aria-live="polite">Reveal Number</button>
+      </div>
+
+      <div class="content">
+        <div class="starbox" aria-live="polite" aria-atomic="true">
+          <div id="energyNumber" class="number" aria-label="Energy number">--</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="pill" title="Source: curated set">
+          • Randomized from a curated set
+        </span>
+        <span class="pill" id="lastTime">Not picked yet</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Curated list (deduplicated except where user repeated deliberately)
+    const curatedNumbers = [
+      1,2,3,4,5,6,7,8,9,10,11,12,13,11,22,33,44,55,66,77,88,99,100,101,111,144,222,333,444,555,777,888,999,1010,1212,1111,19000000
+    ];
+
+    const btn = document.getElementById('revealBtn');
+    const out = document.getElementById('energyNumber');
+    const lastTime = document.getElementById('lastTime');
+
+    function pickRandom() {
+      const idx = Math.floor(Math.random() * curatedNumbers.length);
+      return curatedNumbers[idx];
+    }
+
+    function formatNumber(n){
+      return n.toLocaleString(undefined);
+    }
+
+    function animateNumber(el) {
+      el.style.transition = 'transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(12px) scale(.98)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+    }
+
+    function reveal() {
+      const n = pickRandom();
+      out.textContent = formatNumber(n);
+      animateNumber(out);
+      const t = new Date();
+      lastTime.textContent = 'Picked ' + t.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+    }
+
+    btn.addEventListener('click', reveal);
+
+    // Optional: reveal on space/enter when focused
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
+    });
+  </script>
+</body>
+</html>
